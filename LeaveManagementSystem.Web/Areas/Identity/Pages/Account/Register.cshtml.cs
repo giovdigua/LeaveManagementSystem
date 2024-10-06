@@ -41,6 +41,8 @@ namespace LeaveManagementSystem.Web.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; } = new InputModel();
 
+        public string[] RoleNames { get; set; }
+
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -103,8 +105,6 @@ namespace LeaveManagementSystem.Web.Areas.Identity.Pages.Account
             public DateOnly DateOfBirth { get; set; }
 
             public string RoleName { get; set; }
-
-            public string[] RoleNames { get; set; }
         }
 
 
@@ -116,7 +116,7 @@ namespace LeaveManagementSystem.Web.Areas.Identity.Pages.Account
                 .Select(q => q.Name)
                 .Where(q => q != "Administrator")
                 .ToArrayAsync();
-            Input.RoleNames = roles;
+            RoleNames = roles;
 
         }
 
@@ -177,6 +177,11 @@ namespace LeaveManagementSystem.Web.Areas.Identity.Pages.Account
             }
 
             // If we got this far, something failed, redisplay form
+            var roles = await _roleManager.Roles
+               .Select(q => q.Name)
+               .Where(q => q != "Administrator")
+               .ToArrayAsync();
+            RoleNames = roles;
             return Page();
         }
 
