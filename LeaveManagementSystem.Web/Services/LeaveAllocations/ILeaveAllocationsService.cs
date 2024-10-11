@@ -2,5 +2,6 @@
 {
     public interface ILeaveAllocationsService
     {
+        Task AllocateLeave(string employeeId);
     }
 }
